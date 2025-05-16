@@ -19,7 +19,8 @@ public class KafkaProducer {
     public void send(AppointmentRequest request) {
         try {
             String message = objectMapper.writeValueAsString(request);
-            kafkaTemplate.send(topic, message);
+            String key = request.getDoctorName(); // Используем имя врача как ключ
+            kafkaTemplate.send(topic, key, message); // <-- ключ передаём сюда
         } catch (Exception e) {
             e.printStackTrace();
         }
