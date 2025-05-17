@@ -1,0 +1,9 @@
+docker exec -it kafka-healthcare-system-postgres-1 psql -U admin -d healthcare_db - подключится к базе
+SELECT * FROM patient; - все пациенты
+SELECT * FROM appointment; - все врачи
+
+docker exec -it kafka-healthcare-system-kafka-1 bash - подкоючится к кафке 
+kafka-console-consumer --bootstrap-server localhost:9092 --topic appointments --partition 0 --from-beginning -подключение к партициям 1-2-3
+kafka-console-consumer --bootstrap-server localhost:9092 --topic appointments --partition 1 --from-beginning
+kafka-console-consumer --bootstrap-server localhost:9092 --topic appointments --partition 2 --from-beginning
+

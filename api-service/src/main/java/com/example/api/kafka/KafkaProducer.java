@@ -4,6 +4,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.api.dto.AppointmentRequest;
+import java.util.UUID;
 
 @Service
 public class KafkaProducer {
@@ -16,13 +17,16 @@ public class KafkaProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
+
+
     public void send(AppointmentRequest request) {
         try {
             String message = objectMapper.writeValueAsString(request);
-            String key = request.getDoctorName(); // Используем имя врача как ключ
-            kafkaTemplate.send(topic, key, message); // <-- ключ передаём сюда
+            String key = UUID.randomUUID().toString();
+            kafkaTemplate.send(topic, key, message);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }
